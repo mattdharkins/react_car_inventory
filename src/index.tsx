@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
+import { ThemeProvider } from '@mui/styles';
 import { Home, Dashboard, SignIn } from './components';
-// import { StyledEngineProvider } from '@mui/system';
 import './styles.css';
+import { theme } from './Theme/themes'
 
 
 
