@@ -3,21 +3,26 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@mui/styles';
+import { Provider } from 'react-redux';
 import { Home, Dashboard, SignIn } from './components';
 import './styles.css';
-import { theme } from './Theme/themes'
-
+import { theme } from './Theme/themes';
+import { store } from './redux/store';
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <Routes>
-    <Route path='/' element={<Home title={'Ferrari Rangers'}/>}/>
-    <Route path='/dashboard' element={<Dashboard />} />
-    <Route path='/signin' element={<SignIn />} />
-    </Routes>
-    </Router>
+    <Provider store={store}>
+    <ThemeProvider theme= { theme }>
+      <Router>
+        <Routes>
+      <Route path='/' element={<Home title={'Ferrari Rangers'}/>}/>
+      <Route path='/dashboard' element={<Dashboard />} />
+      <Route path='/signin' element={<SignIn />} />
+      </Routes>
+      </Router>
+    </ThemeProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

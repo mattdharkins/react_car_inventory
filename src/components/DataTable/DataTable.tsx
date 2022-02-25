@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridValueGetterParams, GridSelectionModel } from '@mui/x-data-grid';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@mui/material'
 import { server_calls } from '../../api';
 import { useGetData } from '../../custom-hooks';
+import { CarForm } from '../../components';
+
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 200 },
@@ -69,8 +72,32 @@ const rows = [
   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ];
 
+interface gridData{
+  data:{
+    id?: string;
+  }
+}
+
 export const DataTable = () => {
     let { carData, getData } = useGetData();
+    let [open, setOpen] = useState(false);
+    let [gridData, setData] = useState<GridSelectionModel>([])
+
+    let handleOpen = () =>{
+      setOpen(true);
+    }
+
+    let handleClose = () =>{
+      setOpen(false);
+    }
+
+    let deleteData = async () => {
+      for ( let id in gridData){
+        await server_calls.delete(`${gridData[id]}`)}
+      window.location.reload()
+        
+    }
+    console.log(gridData)
     
     return (
       <div style={{ height: 400, width: '100%' }}>
@@ -81,8 +108,23 @@ export const DataTable = () => {
           pageSize={5}
           rowsPerPageOptions={[5]}
           checkboxSelection
-          disableSelectionOnClick
+          onSelectionModelChange = {(newSelectionModel) => {setData(newSelectionModel);}}
+          {...carData} 
         />
+        <Button onClick={handleOpen}>Update Ferrari</Button>
+        <Button variant="contained" color="primary" onClick={deleteData}>Delete Ferrari</Button>
+        {/*Dialog Pop Up begin */}
+        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+          <DialogTitle id="form-dialog-title">Update A Ferrari</DialogTitle>
+          <DialogContent>
+            <DialogContentText>Ferrari id: {gridData[0]}</DialogContentText>
+              <CarForm id={ `${gridData[0]}` }/>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick = {handleClose} color="primary">Cancel</Button>
+            <Button onClick={handleClose} color = "primary">Done</Button> 
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }

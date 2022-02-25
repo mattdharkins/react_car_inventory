@@ -1,8 +1,11 @@
 import React from 'react';
 import { styled } from '@mui/system';
 import { Button } from '@mui/material';
+import { red } from '@mui/material/colors'
 import car_image from '../../assets/images/car_image.png';
 import { Link } from 'react-router-dom';
+
+const primary = red[900]
 
 interface Props{
     title: string;

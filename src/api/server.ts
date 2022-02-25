@@ -33,7 +33,7 @@ export const server_calls = {
     },
 
     update: async ( id: string, data: any={}) => {
-        const response = await fetch(`https://car-inventory-81.herokuapp.com/api/cars${id}`,{
+        const response = await fetch(`https://car-inventory-81.herokuapp.com/api/cars/${id}`,{
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export const server_calls = {
     },
 
     delete: async ( id: string ) => {
-        const response = await fetch(`https://car-inventory-81.herokuapp.com/api/cars${id}`,{
+        const response = await fetch(`https://car-inventory-81.herokuapp.com/api/cars/${id}`,{
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
